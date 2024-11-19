@@ -1,7 +1,7 @@
 #include "util.h"
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -30,21 +30,22 @@ char *get_input_string(int length) {
 }
 
 int get_input_int(int max) {
-    int input = -1;
-    int valid = false;
+  int input = -1;
+  int valid = false;
 
-    while (!valid) {
-        type("Enter a number (1-%d): ", max);
-        if (scanf("%d", &input) == 1) {
-            if (input >= 1 && input <= max) {
-                valid = true; 
-            }
-        } else {
-            while (getchar() != '\n');
-        }
+  while (!valid) {
+    type("Enter a number (1-%d): ", max);
+    if (scanf("%d", &input) == 1) {
+      if (input >= 1 && input <= max) {
+        valid = true;
+      }
+    } else {
+      while (getchar() != '\n')
+        ;
     }
+  }
 
-    return input;
+  return input;
 }
 
 void type(const char *format, ...) {
