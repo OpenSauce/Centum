@@ -8,8 +8,8 @@ void play()
 	typeln("A voice waves through the air.");
 	typeln("\"Tell me your name:\"");
 	char* name = get_input_string(10);
-	typeln("And hello, to %s", name);
-	Player* player = create_player(name);
-	pretty_print_player(player);
-	destroy_player(player);
+	typeln("Hello %s", name);
+	Player* player = pl_create(name);
+	pl_pretty_print(player);
+	pl_destroy(player);
 }

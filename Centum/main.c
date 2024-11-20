@@ -1,3 +1,5 @@
+#include "game/game.h"
+#include "player/player.h"
 #include "util/util.h"
 #include <stdlib.h>
 
@@ -8,30 +10,28 @@ void quit_game();
 
 int main()
 {
-	int choice;
-	do {
-		type("=== Welcome to Centum ===\n");
-		type("1. Start Game\n");
-		type("2. Continue\n");
-		type("3. Instructions\n");
-		type("4. Quit\n");
+	type("=== Welcome to Centum ===\n");
+	type("1. Start Game\n");
+	type("2. Continue\n");
+	type("3. Instructions\n");
+	type("4. Quit\n");
 
-		int choice = get_input_int(4);
+	int choice = get_input_int(4);
 
-		switch (choice) {
-		case 1:
-			start_game();
-			break;
-		case 2:
-			load_game();
-		case 3:
-			show_instructions();
-			break;
-		case 4:
-			quit_game();
-			break;
-		}
-	} while (choice != 3);
+	switch (choice) {
+	case 1:
+		start_game();
+		break;
+	case 2:
+		load_game();
+		break;
+	case 3:
+		show_instructions();
+		break;
+	case 4:
+		quit_game();
+		break;
+	}
 
 	return 0;
 }
@@ -40,6 +40,8 @@ void start_game()
 {
 	type("\nStarting the game...\n");
 	type("Prepare for adventure!\n\n");
+	Player* p = pl_create("Leigh");
+	g_start(p);
 }
 
 void load_game() { type("\nLoading game unavailable\n"); }

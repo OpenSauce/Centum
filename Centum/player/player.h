@@ -1,14 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-typedef struct player {
+typedef struct Player {
 	char* name;
 	int level;
 	int gold;
 } Player;
 
-Player* create_player(const char* name);
-void destroy_player(Player* self);
-void pretty_print_player(Player* self);
+Player* pl_create(const char* name);
+void pl_destroy(Player* self);
+void pl_pretty_print(Player* self);
 
 #endif

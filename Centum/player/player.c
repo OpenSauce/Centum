@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-Player* create_player(const char* name)
+Player* pl_create(const char* name)
 {
 	Player* p = (Player*)malloc(sizeof(Player));
 	if (!p) {
@@ -24,7 +24,7 @@ Player* create_player(const char* name)
 	return p;
 }
 
-void destroy_player(Player* self)
+void pl_destroy(Player* self)
 {
 	if (self) {
 		free(self->name);
@@ -32,7 +32,7 @@ void destroy_player(Player* self)
 	}
 }
 
-void pretty_print_player(Player* self)
+void pl_pretty_print(Player* self)
 {
 	if (self) {
 		printf("Player name: %s, Level: %d\n", self->name, self->level);
