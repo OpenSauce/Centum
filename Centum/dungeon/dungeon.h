@@ -18,11 +18,11 @@ typedef struct DungeonRoom {
 	struct DungeonRoom* south;
 	struct DungeonRoom* east;
 	struct DungeonRoom* west;
-	bool hasVisited;
-	EncounterType encounterType;
+	bool has_visited;
+	EncounterType encounter_type;
 } DungeonRoom;
 
-DungeonRoom* dr_create(const char* description);
+DungeonRoom* dr_create(const char* description, EncounterType encounter_type);
 void dr_destroy(DungeonRoom* r);
 
 #endif

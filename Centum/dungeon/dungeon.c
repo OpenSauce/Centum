@@ -6,7 +6,13 @@
 Dungeon* dg_create()
 {
 	Dungeon* d = (Dungeon*)malloc(sizeof(Dungeon));
-	DungeonRoom* dr = dr_create("A little room, with a nice shining chest in the middle");
+	DungeonRoom* dr = dr_create("The door creaks open, the smell of dust hits your nose, you find "
+								"a nice shining chest in the middle.",
+		TREASURE);
+	DungeonRoom* dr_n = dr_create("As you open the door you hear the scurry of rats, you see a "
+								  "small rat in the center of the room poised to attack.",
+		MONSTER);
+	dr->north = dr_n;
 	d->entrance = dr;
 	return d;
 }
@@ -17,7 +23,7 @@ void dg_destroy(Dungeon* d)
 	free(d);
 }
 
-DungeonRoom* dr_create(const char* description)
+DungeonRoom* dr_create(const char* description, EncounterType encounter_type)
 {
 	DungeonRoom* r = (DungeonRoom*)malloc(sizeof(DungeonRoom));
 	if (!r) {
@@ -32,6 +38,8 @@ DungeonRoom* dr_create(const char* description)
 		exit(1);
 	}
 	strcpy(r->description, description);
+
+	r->encounter_type = encounter_type;
 
 	r->north = NULL;
 	r->south = NULL;

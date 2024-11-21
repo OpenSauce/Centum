@@ -1,5 +1,5 @@
+#include "entities/player.h"
 #include "game/game.h"
-#include "player/player.h"
 #include "util/util.h"
 #include <stdlib.h>
 
@@ -10,7 +10,7 @@ void quit_game();
 
 int main()
 {
-	type("=== Welcome to Centum ===\n");
+	type_with_color(COLOR_RED, "=== Welcome to %d Centum ===\n", 100);
 	type("1. Start Game\n");
 	type("2. Continue\n");
 	type("3. Instructions\n");

@@ -1,4 +1,4 @@
-#include "../player/player.h"
+#include "../entities/player.h"
 #include "../util/util.h"
 
 void play()
