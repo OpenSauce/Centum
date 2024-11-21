@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-useconds_t character_display_delay = 20000;
+int character_display_delay = 10000;
 
 const char* get_color_code(Color color)
 {

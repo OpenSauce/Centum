@@ -1,5 +1,6 @@
 #include "game.h"
 #include "../util/util.h"
+#include <unistd.h>
 
 DungeonRoom* current_room;
 Player* current_player;
@@ -15,16 +16,14 @@ void g_start(Player* player)
 
 void g_start_current_room()
 {
-	if (!current_room->has_visited) {
-		type("%s\n", current_room->description);
-	}
+	type("%s\n", current_room->description);
 
 	switch (current_room->encounter_type) {
 	case TREASURE:
 		type("1. Open Chest\n");
 		break;
 	case MONSTER:
-		type("1. Attack Monster\n");
+		type("1. Attack enemy\n");
 		break;
 	}
 	type("2. Go North\n");
@@ -41,10 +40,14 @@ void g_start_current_room()
 			g_start_current_room();
 			return;
 		}
-		type_with_color(COLOR_GREEN, "You open the chest and find 20 gold!\n");
-		current_player->gold += 20;
-		type("You now have %d gold.\n", current_player->gold);
-		current_room->has_visited = true;
+		switch (current_room->encounter_type) {
+		case TREASURE:
+			g_treasure();
+			break;
+		case MONSTER:
+			g_combat(current_room->enemy);
+			break;
+		}
 		g_start_current_room();
 		break;
 	case 2:
@@ -84,4 +87,53 @@ void g_start_current_room()
 		}
 		break;
 	}
+}
+
+void g_combat(Enemy* enemy)
+{
+	type("A wild %s appears!\n", enemy->name);
+
+	while (current_player->stats->hp > 0 && enemy->stats->hp > 0) {
+		if (current_player->stats->speed >= enemy->stats->speed) {
+			type("You attack the %s!\n", enemy->name);
+			enemy->stats->hp -= current_player->stats->attack;
+			type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
+			if (enemy->stats->hp <= 0) {
+				type("You defeated the %s!\n", enemy->name);
+				current_room->has_visited = true;
+				return;
+			}
+			type("The %s attacks you!\n", enemy->name);
+			current_player->stats->hp -= enemy->stats->attack;
+			type("You have %d HP left.\n", current_player->stats->hp);
+		} else {
+			type("The %s attacks you!\n", enemy->name);
+			current_player->stats->hp -= enemy->stats->attack;
+			type("You have %d HP left.\n", current_player->stats->hp);
+			if (current_player->stats->hp <= 0) {
+				type("You were defeated by the %s...\n", enemy->name);
+				return;
+			}
+			type("You attack the %s!\n", enemy->name);
+			enemy->stats->hp -= current_player->stats->attack;
+			type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
+		}
+		usleep(500000);
+	}
+
+	if (current_player->stats->hp <= 0) {
+		type("You were defeated by the %s...\n", enemy->name);
+	} else {
+		type("You defeated the %s!\n", enemy->name);
+		current_room->has_visited = true;
+	}
+}
+
+void g_treasure()
+{
+	type_with_color(COLOR_GREEN, "You open the chest and find 20 gold!\n");
+	current_player->gold += 20;
+	type("You now have %d gold.\n", current_player->gold);
+	current_room->has_visited = true;
+	return;
 }

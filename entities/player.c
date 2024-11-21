@@ -18,6 +18,11 @@ Player* pl_create(const char* name)
 		exit(EXIT_FAILURE);
 	}
 
+	CombatStats* stats = (CombatStats*)malloc(sizeof(CombatStats));
+	p->stats = stats;
+	p->stats->attack = 10;
+	p->stats->hp = 10;
+	p->stats->speed = 5;
 	p->level = 0;
 	p->gold = 0;
 
