@@ -10,6 +10,7 @@ void quit_game();
 
 int main()
 {
+menu:
 	type_with_color(COLOR_RED, "=== Welcome to %d Centum ===\n", 100);
 	type("1. Start Game\n");
 	type("2. Continue\n");
@@ -27,6 +28,7 @@ int main()
 		break;
 	case 3:
 		show_instructions();
+		goto menu;
 		break;
 	case 4:
 		quit_game();
