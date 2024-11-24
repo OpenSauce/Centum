@@ -6,6 +6,7 @@
 typedef struct Player {
 	char* name;
 	int level;
+	int experience;
 	int gold;
 	CombatStats* stats;
 } Player;

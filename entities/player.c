@@ -20,10 +20,10 @@ Player* pl_create(const char* name)
 
 	CombatStats* stats = (CombatStats*)malloc(sizeof(CombatStats));
 	p->stats = stats;
-	p->stats->attack = 10;
+	p->stats->attack = 1;
 	p->stats->hp = 10;
-	p->stats->speed = 5;
-	p->level = 0;
+	p->stats->speed = 1;
+	p->level = 1;
 	p->gold = 0;
 
 	return p;

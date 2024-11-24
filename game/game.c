@@ -94,31 +94,43 @@ void g_combat(Enemy* enemy)
 	type("A wild %s appears!\n", enemy->name);
 
 	while (current_player->stats->hp > 0 && enemy->stats->hp > 0) {
-		if (current_player->stats->speed >= enemy->stats->speed) {
-			type("You attack the %s!\n", enemy->name);
-			enemy->stats->hp -= current_player->stats->attack;
-			type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
-			if (enemy->stats->hp <= 0) {
-				type("You defeated the %s!\n", enemy->name);
-				current_room->has_visited = true;
-				return;
+		type("1. Attack\n");
+		type("2. Run\n");
+
+		int choice = get_input_int(2);
+
+		switch (choice) {
+		case 1:
+			if (current_player->stats->speed >= enemy->stats->speed) {
+				type("You attack the %s!\n", enemy->name);
+				enemy->stats->hp -= current_player->stats->attack;
+				type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
+				if (enemy->stats->hp <= 0) {
+					type("You defeated the %s!\n", enemy->name);
+					current_room->has_visited = true;
+					return;
+				}
+				type("The %s attacks you!\n", enemy->name);
+				current_player->stats->hp -= enemy->stats->attack;
+				type("You have %d HP left.\n", current_player->stats->hp);
+			} else {
+				type("The %s attacks you!\n", enemy->name);
+				current_player->stats->hp -= enemy->stats->attack;
+				type("You have %d HP left.\n", current_player->stats->hp);
+				if (current_player->stats->hp <= 0) {
+					type("You were defeated by the %s...\n", enemy->name);
+					return;
+				}
+				type("You attack the %s!\n", enemy->name);
+				enemy->stats->hp -= current_player->stats->attack;
+				type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
 			}
-			type("The %s attacks you!\n", enemy->name);
-			current_player->stats->hp -= enemy->stats->attack;
-			type("You have %d HP left.\n", current_player->stats->hp);
-		} else {
-			type("The %s attacks you!\n", enemy->name);
-			current_player->stats->hp -= enemy->stats->attack;
-			type("You have %d HP left.\n", current_player->stats->hp);
-			if (current_player->stats->hp <= 0) {
-				type("You were defeated by the %s...\n", enemy->name);
-				return;
-			}
-			type("You attack the %s!\n", enemy->name);
-			enemy->stats->hp -= current_player->stats->attack;
-			type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
+			usleep(500000);
+		case 2:
+			type("You attempt to run away from the %s!\n", enemy->name);
+			current_room->has_visited = true;
+			return;
 		}
-		usleep(500000);
 	}
 
 	if (current_player->stats->hp <= 0) {
