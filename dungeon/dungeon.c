@@ -85,13 +85,13 @@ void dg_destroy(Dungeon* d)
 
 DungeonRoom* dr_create(const char* description, EncounterType encounter_type)
 {
-	DungeonRoom* r = (DungeonRoom*)malloc(sizeof(DungeonRoom));
+	DungeonRoom* r = malloc(sizeof(DungeonRoom));
 	if (!r) {
 		printf("Memory allocation failed for DungeonRoom.\n");
 		exit(1);
 	}
 
-	r->description = (char*)malloc(strlen(description) + 1);
+	r->description = malloc(strlen(description) + 1);
 	if (!r->description) {
 		printf("Memory allocation failed for description.\n");
 		free(r);

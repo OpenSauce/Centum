@@ -34,7 +34,7 @@ const char* get_color_code(Color color)
 
 char* get_input_string(int length)
 {
-	char* input = (char*)malloc(length * sizeof(char));
+	char* input = malloc(length * sizeof(char));
 	if (input == NULL) {
 		printf("memory allocation failed!\n");
 		exit(1);

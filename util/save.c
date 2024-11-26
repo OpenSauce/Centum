@@ -34,7 +34,7 @@ int load_player(const char* filename, Player* player)
 	long length = ftell(file);
 	fseek(file, 0, SEEK_SET);
 
-	char* json_string = (char*)malloc(length + 1);
+	char* json_string = malloc(length + 1);
 	fread(json_string, 1, length, file);
 	fclose(file);
 	json_string[length] = '\0';

@@ -4,9 +4,9 @@
 
 Enemy* e_create(char* name, int health, int speed, int damage)
 {
-	Enemy* enemy = (Enemy*)malloc(sizeof(Enemy));
+	Enemy* enemy = malloc(sizeof(Enemy));
 	enemy->name = name;
-	CombatStats* stats = (CombatStats*)malloc(sizeof(CombatStats));
+	CombatStats* stats = malloc(sizeof(CombatStats));
 	stats->hp = health;
 	stats->speed = speed;
 	stats->damage = damage;

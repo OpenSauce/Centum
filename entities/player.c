@@ -8,13 +8,13 @@ const int inventory_capacity = 28;
 
 Inventory* inv_create()
 {
-	Inventory* inv = (Inventory*)malloc(sizeof(Inventory));
+	Inventory* inv = malloc(sizeof(Inventory));
 	if (!inv) {
 		fprintf(stderr, "Memory allocation failed for Inventory\n");
 		exit(EXIT_FAILURE);
 	}
 
-	inv->items = (Item**)malloc(inventory_capacity * sizeof(Item*));
+	inv->items = malloc(inventory_capacity * sizeof(Item*));
 	if (!inv->items) {
 		fprintf(stderr, "Memory allocation failed for Inventory items\n");
 		free(inv);
@@ -52,7 +52,7 @@ bool inv_add_item(Inventory* inv, Item* item)
 
 Player* pl_create(const char* name)
 {
-	Player* p = (Player*)malloc(sizeof(Player));
+	Player* p = malloc(sizeof(Player));
 	if (!p) {
 		fprintf(stderr, "Memory allocation failed for Player\n");
 		exit(EXIT_FAILURE);
@@ -65,7 +65,7 @@ Player* pl_create(const char* name)
 		exit(EXIT_FAILURE);
 	}
 
-	CombatStats* stats = (CombatStats*)malloc(sizeof(CombatStats));
+	CombatStats* stats = malloc(sizeof(CombatStats));
 	p->stats = stats;
 	p->stats->attack = 1;
 	p->stats->hp = 10;
