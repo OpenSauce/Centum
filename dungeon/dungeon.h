@@ -2,9 +2,10 @@
 #define DUNGEON_H
 
 #include "../entities/enemy.h"
+#include "../entities/player.h" // TODO: Move items to item.h instead of player.h
 #include <stdbool.h>
 
-typedef enum EncounterType { MONSTER, TREASURE, BOSS } EncounterType;
+typedef enum EncounterType { MONSTER, TREASURE, SHOP, TRAP, BOSS, HEAL, EMPTY } EncounterType;
 
 typedef struct Dungeon {
 	struct DungeonRoom* entrance;
@@ -23,6 +24,7 @@ typedef struct DungeonRoom {
 	bool interaction_completed;
 	EncounterType encounter_type;
 	Enemy* enemy;
+	Item* item;
 } DungeonRoom;
 
 DungeonRoom* dr_create(const char* description, EncounterType encounter_type);

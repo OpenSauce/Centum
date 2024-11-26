@@ -30,9 +30,10 @@ void g_start_current_room()
 	type("2. Go North\t");
 	type("3. Go West\t");
 	type("4. Go East\t");
-	type("5. Go South\n");
+	type("5. Go South\t");
+	type("6. Player\n");
 
-	int choice = get_input_int(5);
+	int choice = get_input_int(6);
 
 	switch (choice) {
 	case 1:
@@ -85,6 +86,9 @@ void g_start_current_room()
 			type("You can't go that way.\n");
 			break;
 		}
+	case 6:
+		g_player();
+		break;
 	}
 
 	g_start_current_room();
@@ -148,5 +152,11 @@ void g_treasure()
 	current_player->gold += 20;
 	type("You now have %d gold.\n", current_player->gold);
 	current_room->interaction_completed = true;
+	return;
+}
+
+void g_player()
+{
+	pl_pretty_print(current_player);
 	return;
 }
