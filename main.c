@@ -12,9 +12,9 @@ int main()
 {
 menu:
 	type_with_color(COLOR_RED, "=== Welcome to %d Centum ===\n", 100);
-	type("1. Start Game\n");
-	type("2. Continue\n");
-	type("3. Instructions\n");
+	type("1. Start Game\t");
+	type("2. Continue\t");
+	type("3. Instructions\t");
 	type("4. Quit\n");
 
 	int choice = get_input_int(4);

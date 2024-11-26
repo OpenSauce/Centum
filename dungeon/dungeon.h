@@ -1,8 +1,8 @@
 #ifndef DUNGEON_H
 #define DUNGEON_H
 
-#include <stdbool.h>
 #include "../entities/enemy.h"
+#include <stdbool.h>
 
 typedef enum EncounterType { MONSTER, TREASURE, BOSS } EncounterType;
 
@@ -20,6 +20,7 @@ typedef struct DungeonRoom {
 	struct DungeonRoom* east;
 	struct DungeonRoom* west;
 	bool has_visited;
+	bool interaction_completed;
 	EncounterType encounter_type;
 	Enemy* enemy;
 } DungeonRoom;

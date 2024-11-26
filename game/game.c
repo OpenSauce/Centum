@@ -17,76 +17,77 @@ void g_start(Player* player)
 void g_start_current_room()
 {
 	type("%s\n", current_room->description);
+	current_room->has_visited = true;
 
 	switch (current_room->encounter_type) {
 	case TREASURE:
-		type("1. Open Chest\n");
+		type("1. Open Chest\t");
 		break;
 	case MONSTER:
-		type("1. Attack enemy\n");
+		type("1. Attack enemy\t");
 		break;
 	}
-	type("2. Go North\n");
-	type("3. Go West\n");
-	type("4. Go East\n");
+	type("2. Go North\t");
+	type("3. Go West\t");
+	type("4. Go East\t");
 	type("5. Go South\n");
 
 	int choice = get_input_int(5);
 
 	switch (choice) {
 	case 1:
-		if (current_room->has_visited) {
-			type("The chest is empty.\n");
-			g_start_current_room();
-			return;
-		}
 		switch (current_room->encounter_type) {
 		case TREASURE:
+			if (current_room->interaction_completed) {
+				type("The chest is empty.\n");
+				break;
+			}
 			g_treasure();
 			break;
 		case MONSTER:
+			if (current_room->interaction_completed) {
+				type("The bones of the slayed rest there peacefully.\n");
+				break;
+			}
 			g_combat(current_room->enemy);
 			break;
 		}
-		g_start_current_room();
 		break;
 	case 2:
 		if (current_room->north) {
 			current_room = current_room->north;
-			g_start_current_room();
+			break;
 		} else {
 			type("You can't go that way.\n");
-			g_start_current_room();
+			break;
 		}
-		break;
 	case 3:
 		if (current_room->west) {
 			current_room = current_room->west;
-			g_start_current_room();
+			break;
 		} else {
 			type("You can't go that way.\n");
-			g_start_current_room();
+			break;
 		}
-		break;
 	case 4:
 		if (current_room->east) {
 			current_room = current_room->east;
-			g_start_current_room();
+			break;
 		} else {
 			type("You can't go that way.\n");
-			g_start_current_room();
+			break;
 		}
-		break;
 	case 5:
 		if (current_room->south) {
 			current_room = current_room->south;
-			g_start_current_room();
+			break;
 		} else {
 			type("You can't go that way.\n");
-			g_start_current_room();
+			break;
 		}
-		break;
 	}
+
+	g_start_current_room();
 }
 
 void g_combat(Enemy* enemy)
@@ -107,7 +108,7 @@ void g_combat(Enemy* enemy)
 				type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
 				if (enemy->stats->hp <= 0) {
 					type("You defeated the %s!\n", enemy->name);
-					current_room->has_visited = true;
+					current_room->interaction_completed = true;
 					return;
 				}
 				type("The %s attacks you!\n", enemy->name);
@@ -126,9 +127,9 @@ void g_combat(Enemy* enemy)
 				type("The %s has %d HP left.\n", enemy->name, enemy->stats->hp);
 			}
 			usleep(500000);
+			break;
 		case 2:
 			type("You attempt to run away from the %s!\n", enemy->name);
-			current_room->has_visited = true;
 			return;
 		}
 	}
@@ -137,7 +138,7 @@ void g_combat(Enemy* enemy)
 		type("You were defeated by the %s...\n", enemy->name);
 	} else {
 		type("You defeated the %s!\n", enemy->name);
-		current_room->has_visited = true;
+		current_room->interaction_completed = true;
 	}
 }
 
@@ -146,6 +147,6 @@ void g_treasure()
 	type_with_color(COLOR_GREEN, "You open the chest and find 20 gold!\n");
 	current_player->gold += 20;
 	type("You now have %d gold.\n", current_player->gold);
-	current_room->has_visited = true;
+	current_room->interaction_completed = true;
 	return;
 }
